@@ -40,13 +40,29 @@
     <p class="tagline">Touchable real-time water — <b>ripples, refraction and caustics</b>, fully simulated on the GPU.
       A faithful port of Evan Wallace's classic WebGL Water to <b>Unity 6 / URP</b>.</p>
     <div class="btn-row">
-      <a class="btn accent-btn" href="https://github.com/AbstractOcclusion-gif/Evan-WebGl-Water-Unity-6-URP-Port-" target="_blank" rel="noopener">Repository ↗</a>
+      <a class="btn accent-btn" href="../WebPlayer/Webglwater/index.html" target="_blank" rel="noopener">Play demo ↗</a>
+      <a class="btn" href="https://github.com/AbstractOcclusion-gif/Evan-WebGl-Water-Unity-6-URP-Port-" target="_blank" rel="noopener">Repository ↗</a>
     </div>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
+    <span class="mono-label" style="display:block;margin-bottom:16px">// live demo — runs in your browser via Unity 6 WebGPU</span>
+    <div class="media-frame reveal" style="margin-bottom:14px;padding:0;overflow:hidden;max-width:1000px;margin-inline:auto">
+      <div style="position:relative;width:100%;aspect-ratio:960/600;background:#05080d">
+        <iframe src="../WebPlayer/Webglwater/index.html"
+                title="WebGL Water — Unity 6 WebGPU live demo"
+                loading="lazy" allow="fullscreen; autoplay"
+                style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+      </div>
+    </div>
+    <p class="mono-label" style="margin-bottom:40px;opacity:.7">
+      Drag the water to ripple · drag the ball · drag the background to orbit · scroll to zoom.
+      Needs a WebGPU browser (Chrome / Edge, Safari 26+, or latest Firefox) — if the frame stays black,
+      <a href="../WebPlayer/Webglwater/index.html" target="_blank" rel="noopener">open it fullscreen ↗</a>.
+    </p>
+
     <div class="media-frame reveal" style="margin-bottom:24px">
       <img src="../assets/ewan-water-01.png" alt="WebGL Water in Unity — a tiled pool with a floating ball and caustics projected on the floor">
     </div>
