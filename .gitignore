@@ -1,0 +1,12 @@
+# OS / editor cruft
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Raw, heavy source assets — the published site only needs the exported
+# files already in /assets (e.g. assets/luminex-promo.mp4, assets/luminex-01.jpg).
+# Keep the originals backed up elsewhere, or use Git LFS if you want them tracked.
+VizWork/
+
+# Node (only if you ever add tooling)
+node_modules/

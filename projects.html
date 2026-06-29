@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work — AbstractOcclusion</title>
+<meta name="description" content="Projects and experiments by viz / AbstractOcclusion — filterable by language.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <img src="logo.png" alt="AbstractOcclusion mark">
+      <span class="name">ABSTRACT<b>OCCLUSION</b></span>
+    </a>
+    <nav class="nav-links" id="nav">
+      <a href="index.html">Index</a>
+      <a href="projects.html" aria-current="page">Work</a>
+      <a href="code.html">Code</a>
+      <a href="models.html">3D</a>
+      <a href="about.html">About</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav">≡</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <span class="eyebrow mono-label">Index — All work</span>
+    <h1>THE <span class="accent">WORK</span>.</h1>
+    <p class="lede">Engines, tools, simulations and experiments. Filter by language.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+
+    <div class="toolbar" data-filter data-target="#proj-grid .card">
+      <span class="mono-label" style="margin-right:8px">Filter —</span>
+      <button class="filter is-active" data-lang="all">All</button>
+      <button class="filter" data-lang="c">C</button>
+      <button class="filter" data-lang="c++">C++</button>
+      <button class="filter" data-lang="c#">C#</button>
+      <button class="filter" data-lang="python">Python</button>
+      <button class="filter" data-lang="glsl">GLSL</button>
+      <button class="filter" data-lang="js">JS</button>
+    </div>
+
+    <div class="grid" id="proj-grid">
+
+      <a class="card wide" href="projects/luminex.html" data-langs="c#">
+        <div class="thumb"><img src="assets/luminex-01.jpg" alt="Luminex volumetric lighting"></div>
+        <div class="body">
+          <span class="num">PRJ_01 / 2025</span>
+          <h3>Luminex</h3>
+          <p>Optimized, multi-pipeline volumetric fog &amp; lighting for Unity — froxel compute, BiRP / URP / HDRP / Mobile.</p>
+          <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">HLSL / Compute</span></div>
+          <span class="go">Open case ↗</span>
+        </div>
+      </a>
+
+      <a class="card" href="projects/terrasketch.html" data-langs="c#,python">
+        <div class="thumb"><span class="ph">[ TERRASKETCH ]</span></div>
+        <div class="body">
+          <span class="num">PRJ_02 / 2024</span>
+          <h3>TerraSketch</h3>
+          <p>Procedural terrain authoring tool. <em>Replace with the real description.</em></p>
+          <div class="tags"><span class="tag">C#</span><span class="tag">Python</span><span class="tag">Tooling</span></div>
+          <span class="go">Open case ↗</span>
+        </div>
+      </a>
+
+      <a class="card" href="projects/flock.html" data-langs="python,c++">
+        <div class="thumb"><span class="ph">[ FLOCK EXPERIMENTS ]</span></div>
+        <div class="body">
+          <span class="num">PRJ_03 / 2025</span>
+          <h3>Flock Experiments</h3>
+          <p>Emergent swarm / boids simulations. <em>Replace with the real description.</em></p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">C++</span><span class="tag">Simulation</span></div>
+          <span class="go">Open case ↗</span>
+        </div>
+      </a>
+
+      <!-- DUPLICATE THIS BLOCK FOR EACH NEW PROJECT.
+           data-langs must be a comma list matching the filter buttons (lowercase). -->
+      <a class="card half" href="#" data-langs="python">
+        <div class="thumb"><span class="ph">[ NEXT PROJECT ]</span></div>
+        <div class="body">
+          <span class="num">PRJ_04</span>
+          <h3>Untitled</h3>
+          <p>Slot for your next project or one of your Python scripts. Edit title, copy, tags and link.</p>
+          <div class="tags"><span class="tag">Python</span></div>
+          <span class="go">Coming soon</span>
+        </div>
+      </a>
+
+      <a class="card half" href="code.html" data-langs="c,c++,c#,python,glsl,js">
+        <div class="thumb"><span class="ph">[ &lt;/&gt; CODE GALLERY ]</span></div>
+        <div class="body">
+          <span class="num">SRC</span>
+          <h3>Standalone Code →</h3>
+          <p>Smaller scripts and snippets live in the code gallery, filterable by language.</p>
+          <span class="go">Browse snippets ↗</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-foot" id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="mono-label">Let's build something</span>
+        <h3><a href="mailto:sboubyfoulaire@gmail.com">SAY<br>HELLO ↗</a></h3>
+      </div>
+      <div class="foot-col">
+        <span class="mono-label">Contact</span>
+        <a href="mailto:sboubyfoulaire@gmail.com">Email</a>
+        <a href="https://github.com/AbstractOcclusion-gif" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="foot-col">
+        <span class="mono-label">Index</span>
+        <a href="code.html">Code</a>
+        <a href="about.html">About</a>
+        <a href="index.html">Home</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span data-year>2026</span> AbstractOcclusion / viz</span>
+      <span>Built close to the metal</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

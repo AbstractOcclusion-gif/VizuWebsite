@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code — AbstractOcclusion</title>
+<meta name="description" content="Code snippets and scripts by viz / AbstractOcclusion — filterable by language, syntax highlighted.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <img src="logo.png" alt="AbstractOcclusion mark">
+      <span class="name">ABSTRACT<b>OCCLUSION</b></span>
+    </a>
+    <nav class="nav-links" id="nav">
+      <a href="index.html">Index</a>
+      <a href="projects.html">Work</a>
+      <a href="code.html" aria-current="page">Code</a>
+      <a href="models.html">3D</a>
+      <a href="about.html">About</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav">≡</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <span class="eyebrow mono-label">Source — Snippets &amp; scripts</span>
+    <h1>&lt;/&gt; <span class="accent">CODE</span>.</h1>
+    <p class="lede">Standalone bits I'm fond of. Pick a language to filter. <em>Swap in your own scripts — each block is one card.</em></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+
+    <div class="toolbar" data-filter data-target="#snips .snippet">
+      <span class="mono-label" style="margin-right:8px">Language —</span>
+      <button class="filter is-active" data-lang="all">All</button>
+      <button class="filter" data-lang="python">Python</button>
+      <button class="filter" data-lang="c">C</button>
+      <button class="filter" data-lang="c++">C++</button>
+      <button class="filter" data-lang="c#">C#</button>
+      <button class="filter" data-lang="js">JS</button>
+      <button class="filter" data-lang="glsl">GLSL</button>
+    </div>
+
+    <div class="snip-grid" id="snips">
+
+      <!-- PYTHON -->
+      <article class="snippet" data-langs="python">
+        <header>
+          <span class="t">perlin_field.py</span>
+          <span class="lang-tag">Python</span>
+        </header>
+        <p class="desc">2D value-noise field, vectorised with NumPy.</p>
+        <pre><code class="language-python">import numpy as np
+
+def fade(t):
+    return t * t * t * (t * (t * 6 - 15) + 10)
+
+def value_noise(w, h, scale=8, seed=0):
+    rng = np.random.default_rng(seed)
+    g = rng.random((scale + 1, scale + 1))
+    ys, xs = np.mgrid[0:h, 0:w] / np.array([[h], [w]]) * scale
+    x0, y0 = xs.astype(int), ys.astype(int)
+    tx, ty = fade(xs - x0), fade(ys - y0)
+    a = g[y0, x0]     * (1 - tx) + g[y0, x0 + 1]     * tx
+    b = g[y0 + 1, x0] * (1 - tx) + g[y0 + 1, x0 + 1] * tx
+    return a * (1 - ty) + b * ty
+</code></pre>
+      </article>
+
+      <!-- C++ -->
+      <article class="snippet" data-langs="c++">
+        <header>
+          <span class="t">vec3.hpp</span>
+          <span class="lang-tag">C++</span>
+        </header>
+        <p class="desc">Tiny header-only 3-vector for toy renderers.</p>
+        <pre><code class="language-cpp">#pragma once
+#include &lt;cmath&gt;
+
+struct Vec3 {
+    float x{}, y{}, z{};
+    Vec3 operator+(const Vec3&amp; o) const { return {x+o.x, y+o.y, z+o.z}; }
+    Vec3 operator*(float s)       const { return {x*s, y*s, z*s}; }
+    float dot(const Vec3&amp; o)      const { return x*o.x + y*o.y + z*o.z; }
+    float length()                const { return std::sqrt(dot(*this)); }
+    Vec3 normalized()             const { return *this * (1.0f / length()); }
+};
+</code></pre>
+      </article>
+
+      <!-- C -->
+      <article class="snippet" data-langs="c">
+        <header>
+          <span class="t">arena.c</span>
+          <span class="lang-tag">C</span>
+        </header>
+        <p class="desc">Bump-allocator arena — fast, no per-alloc free.</p>
+        <pre><code class="language-c">#include &lt;stddef.h&gt;
+#include &lt;stdint.h&gt;
+
+typedef struct { uint8_t *base; size_t cap, used; } Arena;
+
+void *arena_alloc(Arena *a, size_t size, size_t align) {
+    size_t p = (a-&gt;used + (align - 1)) &amp; ~(align - 1);
+    if (p + size &gt; a-&gt;cap) return NULL;   /* out of space */
+    a-&gt;used = p + size;
+    return a-&gt;base + p;
+}
+
+void arena_reset(Arena *a) { a-&gt;used = 0; }
+</code></pre>
+      </article>
+
+      <!-- C# -->
+      <article class="snippet" data-langs="c#">
+        <header>
+          <span class="t">EventBus.cs</span>
+          <span class="lang-tag">C#</span>
+        </header>
+        <p class="desc">Minimal typed pub/sub for tools &amp; gameplay.</p>
+        <pre><code class="language-csharp">using System;
+using System.Collections.Generic;
+
+public static class EventBus
+{
+    static readonly Dictionary&lt;Type, Delegate&gt; _map = new();
+
+    public static void On&lt;T&gt;(Action&lt;T&gt; fn) =&gt;
+        _map[typeof(T)] = (_map.TryGetValue(typeof(T), out var d)
+            ? (Action&lt;T&gt;)d : null) + fn;
+
+    public static void Emit&lt;T&gt;(T evt)
+    {
+        if (_map.TryGetValue(typeof(T), out var d))
+            ((Action&lt;T&gt;)d)?.Invoke(evt);
+    }
+}
+</code></pre>
+      </article>
+
+      <!-- GLSL -->
+      <article class="snippet" data-langs="glsl">
+        <header>
+          <span class="t">fresnel.frag</span>
+          <span class="lang-tag">GLSL</span>
+        </header>
+        <p class="desc">Schlick fresnel rim term for a surface shader.</p>
+        <pre><code class="language-c">#version 330 core
+in  vec3 vNormal;
+in  vec3 vViewDir;
+out vec4 fragColor;
+
+uniform vec3 baseColor;
+
+void main() {
+    vec3  N = normalize(vNormal);
+    vec3  V = normalize(vViewDir);
+    float f = pow(1.0 - max(dot(N, V), 0.0), 5.0);  // Schlick
+    vec3  col = mix(baseColor, vec3(1.0), f);
+    fragColor = vec4(col, 1.0);
+}
+</code></pre>
+      </article>
+
+      <!-- JS -->
+      <article class="snippet" data-langs="js">
+        <header>
+          <span class="t">raf-loop.js</span>
+          <span class="lang-tag">JS</span>
+        </header>
+        <p class="desc">Fixed-timestep loop with interpolation alpha.</p>
+        <pre><code class="language-javascript">export function loop(update, render, step = 1000 / 60) {
+  let last = performance.now(), acc = 0;
+  function frame(now) {
+    acc += now - last; last = now;
+    while (acc &gt;= step) { update(step / 1000); acc -= step; }
+    render(acc / step);            // alpha for interpolation
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+</code></pre>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-foot" id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="mono-label">Let's build something</span>
+        <h3><a href="mailto:sboubyfoulaire@gmail.com">SAY<br>HELLO ↗</a></h3>
+      </div>
+      <div class="foot-col">
+        <span class="mono-label">Contact</span>
+        <a href="mailto:sboubyfoulaire@gmail.com">Email</a>
+        <a href="https://github.com/AbstractOcclusion-gif" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="foot-col">
+        <span class="mono-label">Index</span>
+        <a href="projects.html">Work</a>
+        <a href="about.html">About</a>
+        <a href="index.html">Home</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span data-year>2026</span> AbstractOcclusion / viz</span>
+      <span>Built close to the metal</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="js/main.js"></script>
+</body>
+</html>

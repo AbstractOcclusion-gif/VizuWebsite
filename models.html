@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D — AbstractOcclusion</title>
+<meta name="description" content="3D models by viz / AbstractOcclusion — interactive viewers, downloadable .glb.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <img src="logo.png" alt="AbstractOcclusion mark">
+      <span class="name">ABSTRACT<b>OCCLUSION</b></span>
+    </a>
+    <nav class="nav-links" id="nav">
+      <a href="index.html">Index</a>
+      <a href="projects.html">Work</a>
+      <a href="code.html">Code</a>
+      <a href="models.html" aria-current="page">3D</a>
+      <a href="about.html">About</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav">≡</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <span class="eyebrow mono-label">Assets — 3D models</span>
+    <h1>3D <span class="accent">MODELS</span>.</h1>
+    <p class="lede">Drag to orbit, scroll to zoom. Each model is downloadable as <b>.glb</b>.
+      <em>Export your models to .glb, drop them in <b>assets/models/</b>, and point each viewer at the file.</em></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+
+    <div class="toolbar" data-filter data-target="#models .model-card">
+      <span class="mono-label" style="margin-right:8px">Filter —</span>
+      <button class="filter is-active" data-lang="all">All</button>
+      <button class="filter" data-lang="prop">Props</button>
+      <button class="filter" data-lang="character">Characters</button>
+      <button class="filter" data-lang="environment">Environment</button>
+    </div>
+
+    <div class="snip-grid" id="models">
+
+      <!-- MODEL CARD — duplicate per model.
+           data-langs = category tags (lowercase, comma list) to match the filters.
+           Set the model-viewer `src` and the download link `href` to your .glb. -->
+      <article class="model-card snippet" data-langs="prop">
+        <header>
+          <span class="t">Model One</span>
+          <span class="lang-tag">PROP</span>
+        </header>
+        <model-viewer
+          src=""
+          alt="Model One"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1"
+          exposure="0.9"
+          environment-image="neutral"
+          style="width:100%;height:340px;background:var(--bg-2);"
+          poster="">
+          <div slot="poster" class="mv-poster">[ DROP assets/models/model-one.glb ]</div>
+        </model-viewer>
+        <p class="desc">Short line about this model — polycount, software, what it's for. <em>Edit me.</em></p>
+        <div class="mv-actions">
+          <a class="btn accent-btn" href="#" download>Download .glb ↓</a>
+          <span class="mono-label">~ size · tris</span>
+        </div>
+      </article>
+
+      <article class="model-card snippet" data-langs="character">
+        <header>
+          <span class="t">Model Two</span>
+          <span class="lang-tag">CHARACTER</span>
+        </header>
+        <model-viewer
+          src=""
+          alt="Model Two"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1"
+          exposure="0.9"
+          environment-image="neutral"
+          style="width:100%;height:340px;background:var(--bg-2);">
+          <div slot="poster" class="mv-poster">[ DROP assets/models/model-two.glb ]</div>
+        </model-viewer>
+        <p class="desc">Short line about this model. <em>Edit me.</em></p>
+        <div class="mv-actions">
+          <a class="btn accent-btn" href="#" download>Download .glb ↓</a>
+          <span class="mono-label">~ size · tris</span>
+        </div>
+      </article>
+
+      <article class="model-card snippet" data-langs="environment">
+        <header>
+          <span class="t">Model Three</span>
+          <span class="lang-tag">ENVIRONMENT</span>
+        </header>
+        <model-viewer
+          src=""
+          alt="Model Three"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1"
+          exposure="0.9"
+          environment-image="neutral"
+          style="width:100%;height:340px;background:var(--bg-2);">
+          <div slot="poster" class="mv-poster">[ DROP assets/models/model-three.glb ]</div>
+        </model-viewer>
+        <p class="desc">Short line about this model. <em>Edit me.</em></p>
+        <div class="mv-actions">
+          <a class="btn accent-btn" href="#" download>Download .glb ↓</a>
+          <span class="mono-label">~ size · tris</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-foot" id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="mono-label">Let's build something</span>
+        <h3><a href="mailto:sboubyfoulaire@gmail.com">SAY<br>HELLO ↗</a></h3>
+      </div>
+      <div class="foot-col">
+        <span class="mono-label">Contact</span>
+        <a href="mailto:sboubyfoulaire@gmail.com">Email</a>
+        <a href="https://github.com/AbstractOcclusion-gif" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="foot-col">
+        <span class="mono-label">Index</span>
+        <a href="projects.html">Work</a>
+        <a href="code.html">Code</a>
+        <a href="index.html">Home</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span data-year>2026</span> AbstractOcclusion / viz</span>
+      <span>Built close to the metal</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
