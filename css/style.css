@@ -256,6 +256,37 @@ body::before {
 .dots { display: flex; gap: 6px; }
 .dots i { width: 9px; height: 9px; border: 1px solid var(--line-2); display: block; }
 
+/* ---------- ambient music player ---------- */
+.ambient-player {
+  position: fixed; top: 14px; right: 16px; z-index: 60;
+  display: flex; align-items: center; gap: 11px;
+  padding: 7px 12px;
+  background: rgba(11,11,12,.86);
+  backdrop-filter: blur(8px);
+  border: 2px solid var(--line-2);
+}
+.ambient-player .ap-toggle {
+  width: 30px; height: 30px; flex: none;
+  display: grid; place-items: center;
+  background: transparent; border: 1px solid var(--line-2); color: var(--text);
+  font-size: 10px; line-height: 1; transition: .12s;
+}
+.ambient-player .ap-toggle:hover { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.ambient-player[data-state="playing"] .ap-toggle { color: var(--accent); border-color: var(--accent); }
+.ambient-player .ap-label {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  white-space: nowrap;
+}
+.ambient-player[data-state="playing"] .ap-label { color: var(--accent); }
+.ambient-player .ap-vol { width: 84px; accent-color: var(--accent); cursor: pointer; }
+
+/* reserve space so the header nav never sits under the player */
+@media (min-width: 641px) { .site-head .nav { padding-right: 230px; } }
+@media (max-width: 640px) {
+  .ambient-player { top: auto; bottom: 14px; right: 14px; }
+  .ambient-player .ap-label { display: none; }
+}
+
 /* ---------- video ---------- */
 .video-frame { border: var(--border); background: #000; }
 .video-frame video { display: block; width: 100%; height: auto; }
@@ -300,9 +331,9 @@ model-viewer { --poster-color: transparent; border-bottom: var(--border); }
    Content is ALWAYS visible. The entrance animation only plays in browsers
    where js/main.js loads AND opts in by setting <html class="js anim">.
    If scripts are blocked (some local previews), nothing is ever hidden. */
-html.anim .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
-.reveal, .reveal.in { opacity: 1; transform: none; }
-html.anim .reveal:not(.in) { opacity: 0; transform: translateY(18px); }
+/* Animation disabled — content is always visible (the scroll reveal was
+   unreliable in some local/preview contexts and could leave boxes empty). */
+.reveal, .reveal.in { opacity: 1 !important; transform: none !important; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
