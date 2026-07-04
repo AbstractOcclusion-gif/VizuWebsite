@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flock Experiments — AbstractOcclusion</title>
-<meta name="description" content="Flock Experiments — emergent swarm / boids simulations by viz.">
+<title>Flock Experiments — real-time fish schooling in water — AbstractOcclusion</title>
+<meta name="description" content="Flock Experiments — boids-style fish-schooling simulations with reactive behaviour (fear, surface breaching), coupled to a live Unity water sim with custom splashes.">
 <link rel="icon" href="../logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,25 +35,27 @@
 <section class="detail-hero">
   <div class="wrap">
     <a class="back-link" href="../projects.html">← All work</a>
-    <span class="eyebrow mono-label">PRJ_04 — Simulation</span>
+    <span class="eyebrow mono-label">PRJ_04 — Simulation / Behaviour · 2026</span>
     <h1>FLOCK<br><span class="stroke">EXPERIMENTS</span></h1>
-    <p class="tagline"><em>One-line tagline — e.g. "A series of boids / swarm simulations exploring emergent behaviour, prototyped in Python and pushed to C++ for scale."</em></p>
+    <p class="tagline">Real-time <b>fish-schooling</b> tests — boids flocking pushed past the classic three
+      rules into <b>reactive behaviour</b> (fear, surface breaching), coupled to a live water simulation
+      with custom splashes.</p>
     <div class="btn-row">
-      <a class="btn accent-btn" href="#" target="_blank" rel="noopener">Repository ↗</a>
-      <a class="btn" href="#" target="_blank" rel="noopener">Live / video ↗</a>
+      <a class="btn accent-btn" href="#reel">▶ See it move</a>
     </div>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
-    <div class="media-frame reveal" style="margin-bottom:24px">
-      <span class="ph">[ HERO SHOT — drop assets/flock-01.png or a GIF ]</span>
+    <span class="mono-label" style="display:block;margin-bottom:16px" id="reel">// complex fish behaviour — fear &amp; surface jump, in a live water sim</span>
+    <div class="media-frame reveal" style="margin-bottom:14px;padding:0;overflow:hidden">
+      <img src="../assets/flock-01.gif" alt="Boids-style fish schooling in a Unity water scene — a startled school scatters and breaks the surface, throwing wakes and splashes" style="width:100%;display:block">
     </div>
-    <div class="grid" style="border:none">
-      <div class="media-frame reveal" style="grid-column:span 6;border:var(--border)"><span class="ph">[ SHOT 02 ]</span></div>
-      <div class="media-frame reveal" style="grid-column:span 6;border:var(--border)"><span class="ph">[ SHOT 03 ]</span></div>
-    </div>
+    <p class="mono-label" style="margin-bottom:40px;opacity:.7">
+      A startled school scatters and breaks the surface — the flocking drives wakes, ripples and custom
+      splashes across the water in real time. Running in Unity (KWS Water 2 + custom splash FX).
+    </p>
   </div>
 </section>
 
@@ -61,25 +63,36 @@
   <div class="wrap">
     <dl class="spec reveal">
       <div><dt>Role</dt><dd>Solo dev</dd></div>
-      <div><dt>Languages</dt><dd>Python · C++</dd></div>
-      <div><dt>Type</dt><dd>Simulation</dd></div>
-      <div><dt>Year</dt><dd>2025</dd></div>
+      <div><dt>Built with</dt><dd>Unity · C#</dd></div>
+      <div><dt>Type</dt><dd>Simulation / Behaviour</dd></div>
+      <div><dt>Year</dt><dd>2026</dd></div>
     </dl>
+
     <div class="split reveal" style="margin-top:32px">
       <div class="prose">
         <span class="mono-label" style="display:block;margin-bottom:20px">// overview</span>
-        <p><em>Replace with what the Flock experiments are.</em> The rules (separation, alignment, cohesion), variations you tried, and what emerged.</p>
-        <p>Talk about performance — spatial hashing, GPU, particle counts — and any visuals you're proud of.</p>
+        <p>Flock Experiments is an ongoing series of real-time <b>fish-schooling</b> tests — boids-style
+          flocking taken past the classic three rules into more complex, reactive behaviour, and staged
+          inside a live water simulation rather than an empty box.</p>
+        <p>The Reynolds base — <b>separation, alignment and cohesion</b> — keeps a school coherent; layered
+          on top are reactive states like <b>fear-driven flight</b> and <b>surface breaching</b>, where a
+          startled shoal scatters and individual fish jump clear of the water.</p>
+        <p>The flock is coupled to the water itself (KWS Water 2 plus custom splash effects), so schools
+          leave wakes and ripples as they move and throw real splashes when they breach — the behaviour and
+          the water feed back into each other, which is the part these tests are really about.</p>
       </div>
       <div class="prose">
         <span class="mono-label" style="display:block;margin-bottom:20px">// highlights</span>
         <ul class="skill-list">
-          <li><span class="lang">Experiment one</span><span class="mono-label">EDIT</span></li>
-          <li><span class="lang">Experiment two</span><span class="mono-label">EDIT</span></li>
-          <li><span class="lang">Experiment three</span><span class="mono-label">EDIT</span></li>
+          <li><span class="lang">Boids core — separation / align / cohesion</span><span class="mono-label">RULES</span></li>
+          <li><span class="lang">Reactive fear / flee response</span><span class="mono-label">FEAR</span></li>
+          <li><span class="lang">Surface-breach (jump) behaviour</span><span class="mono-label">JUMP</span></li>
+          <li><span class="lang">Water-coupled wakes + custom splashes</span><span class="mono-label">SPLASH</span></li>
+          <li><span class="lang">Real-time in Unity</span><span class="mono-label">LIVE</span></li>
         </ul>
       </div>
     </div>
+
     <div class="btn-row" style="margin-top:40px">
       <a class="btn" href="luminex.html">Back to start → Luminex</a>
     </div>
