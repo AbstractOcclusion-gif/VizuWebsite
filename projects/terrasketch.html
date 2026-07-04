@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TerraSketch — AbstractOcclusion</title>
-<meta name="description" content="TerraSketch — procedural terrain authoring tool by viz.">
+<title>TerraSketch — real-world geodata to game-ready 3D terrain — AbstractOcclusion</title>
+<meta name="description" content="TerraSketch — a Python tool suite that turns French IGN + OpenStreetMap open data into game-ready 3D terrain: 1-metre elevation, carved roads and rivers, aerial-derived biome textures, buildings and vegetation, exported straight to Unity.">
 <link rel="icon" href="../logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 <link rel="stylesheet" href="../css/style.css">
 <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -35,25 +36,37 @@
 <section class="detail-hero">
   <div class="wrap">
     <a class="back-link" href="../projects.html">← All work</a>
-    <span class="eyebrow mono-label">PRJ_03 — Tooling</span>
+    <span class="eyebrow mono-label">PRJ_03 — Geospatial / Tooling · 2026</span>
     <h1>TERRA<br>SKETCH</h1>
-    <p class="tagline"><em>One-line tagline — e.g. "A node-based procedural terrain editor with a C# front-end and a Python generation backend."</em></p>
+    <p class="tagline">A Python tool suite that turns <b>real-world open geodata</b> into game-ready 3D terrain —
+      <b>1-metre elevation</b>, carved roads and rivers, aerial-derived biome textures, buildings and vegetation,
+      all extracted for an actual place and exported straight to Unity.</p>
     <div class="btn-row">
-      <a class="btn accent-btn" href="#" target="_blank" rel="noopener">Repository ↗</a>
-      <a class="btn" href="#" target="_blank" rel="noopener">Live / video ↗</a>
+      <a class="btn accent-btn" href="#clip">▶ Watch it run</a>
     </div>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
+    <span class="mono-label" style="display:block;margin-bottom:16px" id="clip">// a real 2 km valley near Babeau-Bouldoux, reconstructed from open data</span>
+    <div class="media-frame reveal" style="margin-bottom:14px;padding:0;overflow:hidden">
+      <video autoplay muted loop playsinline preload="metadata" style="width:100%;display:block">
+        <source src="../assets/terrasketch-clip.mp4" type="video/mp4">
+      </video>
+    </div>
+    <p class="mono-label" style="margin-bottom:40px;opacity:.7">
+      ↑ One command turns a lat/lon bounding box into this: IGN 1&nbsp;m elevation, BD&nbsp;ORTHO aerial texture,
+      the OSM road/track network and a carved river — orbiting in an interactive viewer.
+    </p>
+
     <div class="media-frame reveal" style="margin-bottom:24px">
-      <span class="ph">[ HERO SHOT — drop assets/terrasketch-01.png ]</span>
+      <img src="../assets/terrasketch-01.png" alt="TerraSketch output — a real valley reconstructed as a 3D terrain block with draped aerial imagery, extracted roads and tracks, a carved river channel, POI pins and an extruded soil skirt">
     </div>
-    <div class="grid" style="border:none">
-      <div class="media-frame reveal" style="grid-column:span 6;border:var(--border)"><span class="ph">[ SHOT 02 ]</span></div>
-      <div class="media-frame reveal" style="grid-column:span 6;border:var(--border)"><span class="ph">[ SHOT 03 ]</span></div>
-    </div>
+    <p class="mono-label" style="opacity:.7">
+      The exported terrain block — draped BD&nbsp;ORTHO imagery, the extracted road/track network, a carved river
+      channel, semantic POI pins, and the extruded soil skirt under the surface.
+    </p>
   </div>
 </section>
 
@@ -61,25 +74,115 @@
   <div class="wrap">
     <dl class="spec reveal">
       <div><dt>Role</dt><dd>Solo dev</dd></div>
-      <div><dt>Languages</dt><dd>C# · Python</dd></div>
-      <div><dt>Type</dt><dd>Creative tool</dd></div>
-      <div><dt>Year</dt><dd>2024</dd></div>
+      <div><dt>Built with</dt><dd>Python · NumPy · SciPy · scikit-learn</dd></div>
+      <div><dt>Type</dt><dd>Geospatial → 3D pipeline</dd></div>
+      <div><dt>Year</dt><dd>2026</dd></div>
     </dl>
+
     <div class="split reveal" style="margin-top:32px">
       <div class="prose">
         <span class="mono-label" style="display:block;margin-bottom:20px">// overview</span>
-        <p><em>Replace with what TerraSketch is.</em> What it generates, the workflow it gives the user, and the architecture (UI vs. generation backend).</p>
-        <p>Note the algorithms — noise, erosion, biome rules — and what was hard to get right.</p>
+        <p>TerraSketch is a command-line pipeline that reconstructs a real place — pick a WGS84 bounding box and it
+          returns a textured, game-ready 3D terrain. It pulls <b>France's national open geodata</b> (IGN Géoplateforme)
+          plus <b>OpenStreetMap</b>, reprojects everything into Lambert-93 metres, and runs an <b>ingest → transform → export</b>
+          pipeline that ends in Unity-ready meshes, textures and placement data.</p>
+        <p>Elevation is the real <b>RGE&nbsp;ALTI 1&nbsp;m</b> bare-ground model, so the terrain carries true metre-scale
+          relief rather than resampled noise. On top of that surface the tool <b>extracts and bakes real features</b>:
+          the OSM highway hierarchy becomes a road mask and is carved into the heightmap with graded shoulders; a chosen
+          waterway is draped into a meandering, carved river channel; aerial imagery is classified into a biome splatmap;
+          IGN LiDAR canopy heights scatter trees; and BD&nbsp;TOPO footprints rise into gable-roofed buildings.</p>
+        <p>Every literal lives in one <code>constants.py</code> (no magic numbers), each stage validates its inputs and
+          <b>fails fast</b>, and the offline sub-commands re-run from pristine backups so tuning a shoulder width or a
+          river depth never compounds onto an already-edited bundle.</p>
       </div>
       <div class="prose">
-        <span class="mono-label" style="display:block;margin-bottom:20px">// highlights</span>
+        <span class="mono-label" style="display:block;margin-bottom:20px">// what it extracts</span>
         <ul class="skill-list">
-          <li><span class="lang">Feature one</span><span class="mono-label">EDIT</span></li>
-          <li><span class="lang">Feature two</span><span class="mono-label">EDIT</span></li>
-          <li><span class="lang">Feature three</span><span class="mono-label">EDIT</span></li>
+          <li><span class="lang">IGN RGE ALTI 1&nbsp;m elevation</span><span class="mono-label">DTM</span></li>
+          <li><span class="lang">BD ORTHO aerial ≈0.45&nbsp;m/px</span><span class="mono-label">ORTHO</span></li>
+          <li><span class="lang">OSM roads → carved corridors</span><span class="mono-label">ROADS</span></li>
+          <li><span class="lang">OSM river → meandering channel</span><span class="mono-label">RIVER</span></li>
+          <li><span class="lang">Slope + colour biome splatmap</span><span class="mono-label">TEXTURE</span></li>
+          <li><span class="lang">LiDAR HD canopy tree scatter</span><span class="mono-label">TREES</span></li>
+          <li><span class="lang">BD TOPO gable buildings</span><span class="mono-label">BUILT</span></li>
+          <li><span class="lang">Chunked LOD + relief-normal bake</span><span class="mono-label">MESH</span></li>
         </ul>
       </div>
     </div>
+
+    <div class="reveal" style="margin-top:48px">
+      <span class="mono-label" style="display:block;margin-bottom:20px">// the pipeline</span>
+      <div class="split">
+        <div class="prose">
+          <ul class="skill-list">
+            <li><span class="lang">WGS84 bbox → Lambert-93 metres</span><span class="mono-label">REPROJECT</span></li>
+            <li><span class="lang">WMS elevation → 16-bit heightmap</span><span class="mono-label">INGEST</span></li>
+            <li><span class="lang">Chunked LOD mesh + soil skirt</span><span class="mono-label">MESH</span></li>
+            <li><span class="lang">WMTS ortho → stylized colour</span><span class="mono-label">IMAGERY</span></li>
+          </ul>
+        </div>
+        <div class="prose">
+          <ul class="skill-list">
+            <li><span class="lang">Overpass features → POIs + paths</span><span class="mono-label">OSM</span></li>
+            <li><span class="lang">Road carve + river carve/paint</span><span class="mono-label">CARVE</span></li>
+            <li><span class="lang">Poisson-disk multi-layer scatter</span><span class="mono-label">SCATTER</span></li>
+            <li><span class="lang">Manifest + bundle → Unity import</span><span class="mono-label">EXPORT</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top:48px">
+      <span class="mono-label" style="display:block;margin-bottom:20px">// inside the pipeline — Python</span>
+      <div class="snip-grid">
+
+        <article class="snippet" data-langs="python">
+          <header>
+            <span class="t">splatmap.py — biome textures</span>
+            <span class="lang-tag">Python</span>
+          </header>
+          <p class="desc">Terrain textures from the land itself: slope and altitude override an aerial-colour k-means classification (condensed).</p>
+          <pre><code class="language-python"># R = grass · G = rock · B = forest · A = water
+weights = color_biome_onehot(cluster_labels)   # from k-means over the ortho
+
+# Steep ground is rock, whatever colour the aerial says.
+steep = slope_deg &gt; SLOPE_ROCK_MIN_DEGREES     # 35 deg
+weights[steep] = 0.0
+weights[steep, ROCK] = 1.0
+
+# Gentle, unclaimed ground leans grass; high ground leans rock.
+gentle = slope_deg &lt; SLOPE_GRASS_MAX_DEGREES   # 20 deg
+weights[gentle &amp; unclaimed, GRASS] += 0.5
+weights[altitude_frac &gt; 0.75, ROCK]    += 0.3
+
+splat = normalize(gaussian_blur(weights))      # soft biome seams, Σ = 255
+</code></pre>
+        </article>
+
+        <article class="snippet" data-langs="python">
+          <header>
+            <span class="t">river_carve.py — a river, not a canal</span>
+            <span class="lang-tag">Python</span>
+          </header>
+          <p class="desc">A raised-cosine bowl: full depth at the thalweg, meeting terrain tangentially at the bank (no seam). The bed is forced downhill so water never runs uphill.</p>
+          <pre><code class="language-python">def bowl_coverage(dist_to_centerline, core_half, bank_reach):
+    reach = core_half + bank_reach
+    ramp  = np.clip(dist_to_centerline / np.maximum(reach, 1.0), 0.0, 1.0)
+    cov   = 0.5 * (1.0 + np.cos(np.pi * ramp))   # 1 at centre → 0 at edge
+    cov[~np.isfinite(dist_to_centerline)] = 0.0
+    return cov
+
+# Blend the carved channel into the terrain by coverage...
+carved = terrain * (1.0 - cov) + bed_floor * cov
+
+# ...and the bed can only ever descend downstream (a dip becomes a pool).
+bed_floor = np.minimum.accumulate(sampled_terrain - depth)
+</code></pre>
+        </article>
+
+      </div>
+    </div>
+
     <div class="btn-row" style="margin-top:40px">
       <a class="btn" href="flock.html">Next project → Flock Experiments</a>
     </div>
@@ -113,5 +216,7 @@
 </footer>
 
 <script src="../js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
 </body>
 </html>
