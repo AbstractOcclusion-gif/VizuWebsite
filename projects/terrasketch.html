@@ -49,7 +49,29 @@
 
 <section class="section">
   <div class="wrap">
-    <span class="mono-label" style="display:block;margin-bottom:16px" id="clip">// a real 2 km valley near Babeau-Bouldoux, reconstructed from open data</span>
+    <div class="prose reveal" style="max-width:820px">
+      <span class="mono-label" style="display:block;margin-bottom:20px">// pipeline — end to end</span>
+      <p>TerraSketch runs as a single CLI pass over a WGS84 bounding box. The box is projected into
+        <b>Lambert-93 (EPSG:2154)</b> so every downstream step works in real metres, with a local
+        south-west origin that maps straight onto Unity's X/Z. Elevation is IGN's <b>RGE&nbsp;ALTI 1&nbsp;m</b>
+        bare-ground model, fetched as a GeoTIFF and resampled into a 16-bit heightmap whose smoothing is
+        fixed in metres, not pixels — so the relief stays stable across output resolutions.</p>
+      <p>That heightmap is diced into an <b>N×N grid of chunk meshes</b> with multiple LOD levels and an
+        extruded soil skirt, then a <b>relief-normal map</b> is baked from the full-resolution surface so
+        even a low-poly chunk reads as detailed. In parallel, <b>BD&nbsp;ORTHO</b> aerial imagery is pulled
+        from the IGN WMTS at ≈0.45&nbsp;m/px, aligned to the terrain, LAB-graded into a stylized colour map,
+        and classified into a <b>biome splatmap</b> — slope and altitude overriding a k-means clustering of
+        the aerial colours into grass / rock / forest / water weights.</p>
+      <p>Vector features come from <b>OpenStreetMap</b> via the Overpass API: the highway hierarchy is
+        Chaikin-smoothed, rasterized into an anti-aliased road mask and <b>carved into the heightmap</b> with
+        graded shoulders, while a chosen waterway is draped onto the surface as a tapered ribbon and cut into
+        a <b>meandering channel</b> whose bed can only descend downstream. IGN <b>LiDAR HD</b> canopy heights
+        plus a Bridson Poisson-disk sampler drive multi-layer tree / rock / grass scatter, <b>BD&nbsp;TOPO</b>
+        footprints extrude into gable-roofed buildings, and everything is written out as OBJ/FBX meshes, PNG
+        textures and a JSON <b>manifest</b> — a self-describing bundle the Unity importer reads in one step.</p>
+    </div>
+
+    <span class="mono-label" style="display:block;margin:44px 0 16px" id="clip">// a real 2 km valley near Babeau-Bouldoux, reconstructed from open data</span>
     <div class="media-frame reveal" style="margin-bottom:14px;padding:0;overflow:hidden">
       <video autoplay muted loop playsinline preload="metadata" style="width:100%;display:block">
         <source src="../assets/terrasketch-clip.mp4" type="video/mp4">

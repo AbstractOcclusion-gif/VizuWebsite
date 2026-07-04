@@ -57,6 +57,90 @@
 
     <div class="snip-grid" id="snips">
 
+      <!-- TERRASKETCH — reproject (Python) -->
+      <article class="snippet" data-langs="python">
+        <header>
+          <span class="t">reproject.py</span>
+          <span class="lang-tag">Python</span>
+        </header>
+        <p class="desc">TerraSketch — WGS84 bbox → Lambert-93 metres, via one cached pyproj transformer.</p>
+        <pre><code class="language-python">from pyproj import Transformer
+
+# One reusable, thread-safe transformer (EPSG:4326 -&gt; EPSG:2154).
+# always_xy=True -&gt; pass (lon, lat), get (easting, northing) in metres.
+_wgs84_to_l93 = Transformer.from_crs("EPSG:4326", "EPSG:2154", always_xy=True)
+
+def bbox_to_lambert93(south, west, north, east):
+    min_x, min_y = _wgs84_to_l93.transform(west, south)
+    max_x, max_y = _wgs84_to_l93.transform(east, north)
+    return min_x, min_y, max_x, max_y   # projected metres, SW -&gt; NE
+
+# Local Unity space = offset from the SW corner; y stays free for elevation.
+def to_local(easting, northing, origin):
+    return easting - origin.easting, northing - origin.northing
+</code></pre>
+      </article>
+
+      <!-- TERRASKETCH — poisson (Python) -->
+      <article class="snippet" data-langs="python">
+        <header>
+          <span class="t">poisson.py</span>
+          <span class="lang-tag">Python</span>
+        </header>
+        <p class="desc">TerraSketch — Bridson Poisson-disk sampling: even, natural scatter with a guaranteed minimum spacing (condensed).</p>
+        <pre><code class="language-python">import math
+
+def poisson_disk(width, height, radius, rng, k):
+    """Bridson (2007): grid-accelerated O(n), seeded for reproducibility."""
+    cell = radius / math.sqrt(2)            # at most one sample per grid cell
+    grid = BackgroundGrid(width, height, cell)
+    first = (rng.uniform(0, width), rng.uniform(0, height))
+    samples, active = [first], [first]
+
+    while active:
+        base = rng.choice(active)
+        for _ in range(k):                  # k tries before a point is retired
+            angle = rng.uniform(0, 2 * math.pi)
+            dist  = rng.uniform(radius, 2 * radius)
+            p = (base[0] + math.cos(angle) * dist,
+                 base[1] + math.sin(angle) * dist)
+            if grid.in_bounds(p) and not grid.too_close(p, radius):
+                samples.append(p); active.append(p); grid.insert(p)
+                break
+        else:
+            active.remove(base)             # no room left near this point
+    return samples
+</code></pre>
+      </article>
+
+      <!-- TERRASKETCH — road mask (Python) -->
+      <article class="snippet" data-langs="python">
+        <header>
+          <span class="t">road_mask.py</span>
+          <span class="lang-tag">Python</span>
+        </header>
+        <p class="desc">TerraSketch — smooth OSM roads (Chaikin) and stamp them as an anti-aliased distance field.</p>
+        <pre><code class="language-python">import numpy as np
+
+# Round OSM polylines with Chaikin corner-cutting (endpoints kept).
+def chaikin(points, iterations, cut=0.25):
+    for _ in range(iterations):
+        out = [points[0]]
+        for a, b in zip(points, points[1:]):
+            out.append(lerp(a, b, cut))
+            out.append(lerp(a, b, 1 - cut))
+        out.append(points[-1])
+        points = out
+    return points
+
+# Stamp a segment as an anti-aliased distance field: smoothstep falloff
+# past the core half-width, max-combined so overlapping roads stay clean.
+def edge_coverage(dist, half_width, edge):
+    t = np.clip((half_width + edge - dist) / edge, 0.0, 1.0)
+    return t * t * (3.0 - 2.0 * t)          # smoothstep
+</code></pre>
+      </article>
+
       <!-- PYTHON -->
       <article class="snippet" data-langs="python">
         <header>
