@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebGPU Ocean (Experimental) — open-sea & breaking-shore water for Unity 6 — AbstractOcclusion</title>
+<meta name="description" content="Experimental Unity 6 / URP WebGPU water pushed from a contained pool out to open-ocean and shoreline scale — spectral swell, depth-driven breaking surf and foam, and an underwater pass with god rays and depth fog. Runs in the browser via WebGPU.">
+<link rel="icon" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  /* experimental signal — amber, distinct from the acid accent used for shipped work */
+  .exp-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 11px; margin-bottom: 20px;
+    border: 1px solid #ffa53f; color: #ffb765;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    background: rgba(255,165,63,.06);
+  }
+  .exp-badge::before { content: ""; width: 8px; height: 8px; background: #ffa53f; display: block; }
+  .exp-note {
+    border: 1px solid #ffa53f; background: rgba(255,165,63,.05);
+    padding: 16px 20px; margin-bottom: 40px;
+    color: var(--muted); font-size: 13px; line-height: 1.6;
+  }
+  .exp-note b { color: #ffb765; font-weight: 500; }
+</style>
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap nav">
+    <a class="brand" href="../index.html">
+      <img src="../logo.png" alt="AbstractOcclusion mark">
+      <span class="name">ABSTRACT<b>OCCLUSION</b></span>
+    </a>
+    <nav class="nav-links" id="nav">
+      <a href="../index.html">Index</a>
+      <a href="../projects.html" aria-current="page">Work</a>
+      <a href="../code.html">Code</a>
+      <a href="../models.html">3D</a>
+      <a href="../about.html">About</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav">≡</button>
+  </div>
+</header>
+
+<section class="detail-hero">
+  <div class="wrap">
+    <a class="back-link" href="../projects.html">← All work</a>
+    <span class="eyebrow mono-label">PRJ_05 — Rendering / Simulation · 2026</span>
+    <span class="exp-badge">Experimental — WIP</span>
+    <h1>WEBGPU<br>OCEAN</h1>
+    <p class="tagline">The same browser-run WebGPU water, pushed from a contained pool out to <b>open-ocean and breaking-shore</b> scale —
+      spectral swell, depth-driven <b>surf and foam</b>, and a full underwater pass with god rays and depth fog.</p>
+    <div class="btn-row">
+      <a class="btn accent-btn" href="../WebPlayer/v2/Ocean/index.html" target="_blank" rel="noopener">Play demo ↗</a>
+      <a class="btn" href="unity6-webgpu-water.html">← See the shipped Water demo</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="exp-note">
+      <b>Heads up —</b> this is an experimental testbed for the coastline / foam pipeline, not the finished product.
+      The polished, advertised WebGPU water is the <a href="unity6-webgpu-water.html" style="color:#ffb765">Unity6 WebGPU Water</a> pool demo.
+      Expect rough edges: it's a moving target that changes build to build.
+    </div>
+
+    <span class="mono-label" style="display:block;margin-bottom:16px">// live demo — runs in your browser via Unity 6 WebGPU</span>
+    <div class="media-frame reveal" style="margin-bottom:14px;padding:0;overflow:hidden;max-width:1000px;margin-inline:auto">
+      <div style="position:relative;width:100%;aspect-ratio:960/600;background:#05080d">
+        <iframe src="../WebPlayer/v2/Ocean/index.html"
+                title="WebGPU Ocean — Unity 6 WebGPU live demo (experimental)"
+                loading="lazy" allow="fullscreen; autoplay"
+                style="position:absolute;inset:0;width:100%;height:100%;border:0;touch-action:none"></iframe>
+      </div>
+    </div>
+    <p class="mono-label" style="margin-bottom:40px;opacity:.7">
+      Drag to look around · move toward the shore to watch the waves break.
+      Needs a WebGPU browser (Chrome / Edge, Safari 26+, or latest Firefox) — if the frame stays black,
+      <a href="../WebPlayer/v2/Ocean/index.html" target="_blank" rel="noopener">open it fullscreen ↗</a>.
+    </p>
+
+    <span class="mono-label" style="display:block;margin-bottom:16px">// open sea — wind-driven swell, whitecaps and a hazing horizon</span>
+    <div class="media-frame reveal" style="margin-bottom:40px">
+      <img src="../assets/Ocean.png" alt="WebGPU Ocean — open sea with wind-driven swell, scattered whitecaps and a distant hazing horizon">
+    </div>
+
+    <span class="mono-label" style="display:block;margin-bottom:16px">// the surf zone and the world below</span>
+    <div class="grid" style="border:none">
+      <div class="media-frame reveal" style="grid-column:span 6;border:var(--border);padding:0;overflow:hidden">
+        <img src="../assets/Shore.png" alt="WebGPU Ocean — waves steepening over the rising seabed and breaking into whitewater foam that washes up the beach slope">
+      </div>
+      <div class="media-frame reveal" style="grid-column:span 6;border:var(--border);padding:0;overflow:hidden">
+        <img src="../assets/Underwaterocean.png" alt="WebGPU Ocean — underwater view lit by refracted god rays and caustics fading into blue depth fog above the seabed">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <dl class="spec reveal">
+      <div><dt>Role</dt><dd>Solo dev</dd></div>
+      <div><dt>Built with</dt><dd>Unity 6 · URP · C# · HLSL</dd></div>
+      <div><dt>Type</dt><dd>Rendering / Sim · Experimental</dd></div>
+      <div><dt>Year</dt><dd>2026</dd></div>
+    </dl>
+
+    <div class="split reveal" style="margin-top:32px">
+      <div class="prose">
+        <span class="mono-label" style="display:block;margin-bottom:20px">// overview</span>
+        <p>An experimental offshoot of the <b>WebGPU Water</b> project — the same Unity 6 / URP renderer running in the browser via WebGPU, but scaled up from a contained pool to a whole coastline. Where the pool is a 256² interactive heightfield, this build layers a <b>large-scale spectral swell</b> for the open sea, a depth-driven <b>breaking-surf and foam</b> system at the shore, and a full <b>underwater pass</b> with light shafts and depth fog.</p>
+        <p>Three regimes share one body of water: the <b>open sea</b> — wind-driven swell, scattered whitecaps and a hazing horizon; the <b>surf zone</b>, where the seabed rises, waves steepen and break into whitewater that washes up the beach; and the world <b>below the surface</b>, lit by refracted god rays and caustics that fade into blue depth fog.</p>
+      </div>
+      <div class="prose">
+        <span class="mono-label" style="display:block;margin-bottom:20px">// what's in this build</span>
+        <ul class="skill-list">
+          <li><span class="lang">Large-scale spectral swell</span><span class="mono-label">OPEN SEA</span></li>
+          <li><span class="lang">Wind-driven whitecaps &amp; sparkle</span><span class="mono-label">CRESTS</span></li>
+          <li><span class="lang">Depth-driven breaking surf</span><span class="mono-label">SHORE</span></li>
+          <li><span class="lang">Whitewash foam + beach swash</span><span class="mono-label">FOAM</span></li>
+          <li><span class="lang">Underwater god rays &amp; caustics</span><span class="mono-label">VOLUME</span></li>
+          <li><span class="lang">Runs in-browser via WebGPU</span><span class="mono-label">WEB</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top:48px">
+      <span class="mono-label" style="display:block;margin-bottom:20px">// how it relates to the pool demo</span>
+      <div class="split">
+        <div class="prose">
+          <ul class="skill-list">
+            <li><span class="lang">Same URP / WebGPU renderer</span><span class="mono-label">SHARED</span></li>
+            <li><span class="lang">Pool → open-ocean scale</span><span class="mono-label">SCALE</span></li>
+            <li><span class="lang">Spectral swell over heightfield</span><span class="mono-label">WAVES</span></li>
+            <li><span class="lang">Beer–Lambert depth fog carried over</span><span class="mono-label">DEPTH</span></li>
+          </ul>
+        </div>
+        <div class="prose">
+          <ul class="skill-list">
+            <li><span class="lang">New: shoreline surf pipeline</span><span class="mono-label">SURF</span></li>
+            <li><span class="lang">New: whitewater foam &amp; swash</span><span class="mono-label">FOAM</span></li>
+            <li><span class="lang">New: underwater volume pass</span><span class="mono-label">BELOW</span></li>
+            <li><span class="lang">Status: work in progress</span><span class="mono-label">WIP</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row" style="margin-top:40px">
+      <a class="btn" href="unity6-webgpu-water.html">Related → Unity6 WebGPU Water</a>
+      <a class="btn" href="terrasketch.html">Next project → TerraSketch</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-foot" id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="mono-label">Let's build something</span>
+        <h3><a href="mailto:abstractocclusion@outlook.com">SAY<br>HELLO ↗</a></h3>
+      </div>
+      <div class="foot-col">
+        <span class="mono-label">Contact</span>
+        <a href="mailto:abstractocclusion@outlook.com">Email</a>
+        <a href="https://github.com/AbstractOcclusion-gif" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://x.com/vizinteractiv" target="_blank" rel="noopener">X ↗</a>
+      </div>
+      <div class="foot-col">
+        <span class="mono-label">Index</span>
+        <a href="../projects.html">Work</a>
+        <a href="../code.html">Code</a>
+        <a href="../index.html">Home</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span data-year>2026</span> AbstractOcclusion / viz</span>
+      <span>Built close to the metal</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
